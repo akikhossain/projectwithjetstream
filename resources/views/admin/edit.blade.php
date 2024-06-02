@@ -138,93 +138,34 @@
                             @endif
                             <div class="container mx-auto">
                                 <div class="flex justify-between items-center">
-                                    <h1 class="text-2xl font-bold mb-6 mt-12">Employee List</h1>
-                                    <a href="{{ route('admin.create') }}" type="button"
-                                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">Add</a>
+                                    <h1 class="text-2xl font-bold mb-6 mt-12">Create Employee</h1>
+                                    <a href="{{ route('home') }}" type="button"
+                                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">List</a>
                                 </div>
-                                <form action="" method="get" class="bg-white p-4 rounded-lg shadow-md mb-6">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <button type="button" onclick="window.location.href='{{ route('home') }}'"
-                                            class="bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg px-4 py-2">
-                                            Reset
-                                        </button>
-                                        <div class="flex items-center">
-                                            <input type="text" value="{{ Request::get('keyword') }}" name="keyword"
-                                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                placeholder="Search">
-                                            <button type="submit"
-                                                class="bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg px-4 py-2 ml-2">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                                </svg>
-                                            </button>
+                                <div id="employee-form" class="mb-6">
+                                    <form action="{{ route('employees.update', $employee->id) }}" method="POST"
+                                        class="bg-white p-6 rounded-lg shadow-md">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="mb-4">
+                                            <label for="name" class="block text-gray-700">Name</label>
+                                            <input value="{{ $employee->name }}" type="text" id="name" name="name"
+                                                class="w-full px-4 py-2 border rounded-lg">
                                         </div>
-                                    </div>
-                                </form>
-                                <table class="min-w-full bg-white border border-gray-300">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
-                                                Employee ID</th>
-                                            <th
-                                                class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
-                                                Name</th>
-                                            <th
-                                                class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
-                                                Department</th>
-                                            <th
-                                                class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
-                                                Position</th>
-                                            <th
-                                                class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
-                                                Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($employees->isNotEmpty())
-                                        @foreach ($employees as $employee)
-                                        <tr class="hover:bg-gray-100">
-                                            <td class="py-2 px-4 border-b border-gray-300">{{ $employee->id }}</td>
-                                            <td class="py-2 px-4 border-b border-gray-300">{{ $employee->name }}</td>
-                                            <td class="py-2 px-4 border-b border-gray-300">{{ $employee->department }}
-                                            </td>
-                                            <td class="py-2 px-4 border-b border-gray-300">{{ $employee->position }}
-                                            </td>
-                                            <td class="py-2 px-4 border-b border-gray-300">
-                                                <div class="flex  ">
-                                                    <a href="{{ route('employees.edit', $employee->id) }}">
-                                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path
-                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                            </path>
-                                                        </svg>
-                                                    </a>
-                                                    <a href="{{route('employees.delete',$employee->id)}}"
-                                                        class="text-danger w-4 h-4 mr-1">
-                                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd"
-                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                                clip-rule="evenodd"></path>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                            <td colspan="4" class="py-2 px-4 border-b border-gray-300 text-center">No
-                                                employee found</td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
+                                        <div class="mb-4">
+                                            <label for="department" class="block text-gray-700">Department</label>
+                                            <input value="{{ $employee->department }}" type="text" id="department"
+                                                name="department" class="w-full px-4 py-2 border rounded-lg">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="position" class="block text-gray-700">Position</label>
+                                            <input value="{{ $employee->position }}" type="text" id="position"
+                                                name="position" class="w-full px-4 py-2 border rounded-lg">
+                                        </div>
+                                        <button type="submit"
+                                            class="bg-blue-500 text-white px-4 py-2 rounded-lg">Update</button>
+                                    </form>
+                                </div>
                             </div>
                     </section>
                 </div>

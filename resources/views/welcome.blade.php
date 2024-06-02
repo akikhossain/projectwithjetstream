@@ -20,7 +20,7 @@
                 </a>
                 <div class="flex items-center space-x-6 rtl:space-x-reverse">
                     @auth
-                    <a href="{{ url('/dashboard') }}"
+                    <a href="{{ url('/home') }}"
                         class="text-sm text-blue-600 dark:text-blue-500 hover:underline">Dashboard</a>
                     @else
                     <a href="{{ route('login') }}" class="text-sm text-blue-600 dark:text-blue-500 hover:underline">Log
@@ -37,32 +37,76 @@
         <nav class="bg-gray-50 dark:bg-gray-700">
             <div class="max-w-screen-xl px-4 py-3 mx-auto">
                 <div class="flex items-center">
-                    {{-- <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
-                        <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline"
-                                aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Company</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Team</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-gray-900 dark:text-white hover:underline">Features</a>
-                        </li>
-                    </ul> --}}
+
                 </div>
             </div>
         </nav>
         <section class="max-w-screen-xl mx-auto mt-8 px-4">
             <div class="bg-white p-6 shadow-md rounded-lg">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your Mail Content Title</h2>
-                <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac neque sit amet
-                    nisl fermentum iaculis. Integer nec ante ac lorem sagittis ullamcorper. Nam vitae felis non orci
-                    ullamcorper malesuada. Sed vitae dolor vel odio tempor suscipit ac in velit. Donec ut quam sit amet
-                    justo aliquet condimentum.</p>
-            </div>
+                <div class="bg-white p-6 shadow-md rounded-lg">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Employee Directory Overview</h2>
+                    <p class="text-gray-600 mb-4">
+                        Welcome to the Employee Directory. Here you can find a comprehensive list of all our employees
+                        along with their respective departments and positions. This directory is designed to help you
+                        easily locate and contact any member of our organization.
+                    </p>
+                    <form action="" method="get" class="bg-white p-4 rounded-lg shadow-md mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <button type="button" onclick="window.location.href='{{ route('welcome') }}'"
+                                class="bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg px-4 py-2">
+                                Reset
+                            </button>
+                            <div class="flex items-center">
+                                <input type="text" value="{{ Request::get('keyword') }}" name="keyword"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Search">
+                                <button type="submit"
+                                    class="bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg px-4 py-2 ml-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <table class="min-w-full bg-white border border-gray-300 mt-12">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
+                                    Employee
+                                    ID</th>
+                                <th class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">Name
+                                </th>
+                                <th class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
+                                    Department</th>
+                                <th class="py-2 px-4 border-b border-gray-300 bg-gray-100 text-left text-gray-600">
+                                    Position
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($employees->isNotEmpty())
+                            @foreach($employees as $employee)
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-2 px-4 border-b border-gray-300">{{ $employee->id }}</td>
+                                <td class="py-2 px-4 border-b border-gray-300">{{ $employee->name }}</td>
+                                <td class="py-2 px-4 border-b border-gray-300">{{ $employee->department }}</td>
+                                <td class="py-2 px-4 border-b border-gray-300">{{ $employee->position }}</td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-300 text-center" colspan="4">No employees
+                                    found.
+                                </td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
         </section>
     </div>
 </body>
